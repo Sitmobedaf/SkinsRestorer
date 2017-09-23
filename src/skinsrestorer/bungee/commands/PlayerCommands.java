@@ -36,7 +36,7 @@ import skinsrestorer.shared.utils.SkinFetchUtils.SkinFetchFailedException;
 public class PlayerCommands extends Command {
 
 	public PlayerCommands() {
-		super("skin", "skinsrestorer.playercmds");
+		super("skin");
 	}
 
 	@Override
@@ -55,20 +55,20 @@ public class PlayerCommands extends Command {
 				player.sendMessage(component);
 			}
 		} else
-		if ((args.length == 2) && args[0].equalsIgnoreCase("set")) {
+		if (args.length == 1) {
 			if (CooldownStorage.getInstance().isAtCooldown(player.getUniqueId())) {
 				TextComponent component = new TextComponent(LocaleStorage.getInstance().PLAYER_SKIN_CHANGE_COOLDOWN);
 				component.setColor(ChatColor.RED);
 				player.sendMessage(component);
 				return;
 			}
-			CooldownStorage.getInstance().setCooldown(player.getUniqueId(), 10, TimeUnit.MINUTES);
+			CooldownStorage.getInstance().setCooldown(player.getUniqueId(), 30, TimeUnit.SECONDS);
 			ProxyServer.getInstance().getScheduler().runAsync(
 				SkinsRestorer.getInstance(),
 				new Runnable() {
 					@Override
 					public void run() {
-						String from = args[1];
+						String from = args[0];
 						try {
 							SkinProfile skinprofile = SkinFetchUtils.fetchSkinProfile(from, null);
 							SkinStorage.getInstance().setSkinData(player.getName(), skinprofile);
@@ -84,6 +84,9 @@ public class PlayerCommands extends Command {
 					}
 				}
 			);
+		} else {
+			TextComponent component = new TextComponent(LocaleStorage.getInstance().INVALID_COMMAND_ARGUMENTS);
+			player.sendMessage(component);
 		}
 	}
 

@@ -37,10 +37,6 @@ public class PlayerCommands implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, final String[] args) {
-		if (!sender.hasPermission("skinsrestorer.playercmds")) {
-			sender.sendMessage("You don't have permission to do this");
-			return true;
-		}
 		if (!(sender instanceof Player)) {
 			sender.sendMessage("This commands are only for players");
 			return true;
@@ -53,17 +49,17 @@ public class PlayerCommands implements CommandExecutor {
 			}
 			return true;
 		} else
-		if ((args.length == 2) && args[0].equalsIgnoreCase("set")) {
+		if (args.length == 1) {
 			if (CooldownStorage.getInstance().isAtCooldown(player.getUniqueId())) {
 				player.sendMessage(ChatColor.RED+LocaleStorage.getInstance().PLAYER_SKIN_CHANGE_COOLDOWN);
 				return true;
 			}
-			CooldownStorage.getInstance().setCooldown(player.getUniqueId(), 10, TimeUnit.MINUTES);
+			CooldownStorage.getInstance().setCooldown(player.getUniqueId(), 30, TimeUnit.SECONDS);
 			SkinsRestorer.executor.execute(
 				new Runnable() {
 					@Override
 					public void run() {
-						String from = args[1];
+						String from = args[0];
 						try {
 							SkinProfile skinprofile = SkinFetchUtils.fetchSkinProfile(from, null);
 							SkinStorage.getInstance().setSkinData(player.getName(), skinprofile);
@@ -76,6 +72,8 @@ public class PlayerCommands implements CommandExecutor {
 				}
 			);
 			return true;
+		} else {
+			player.sendMessage(ChatColor.BLUE+LocaleStorage.getInstance().INVALID_COMMAND_ARGUMENTS);
 		}
 		return false;
 	}

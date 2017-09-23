@@ -39,15 +39,16 @@ public class LocaleStorage {
 		}
 	}
 
-	public String PLAYER_SKIN_CHANGE_SKIN_DATA_CLEARED = "Your skin data has been removed";
-	public String PLAYER_SKIN_CHANGE_COOLDOWN = "You can change your skin only once per 10 minutes";
-	public String PLAYER_SKIN_CHANGE_SUCCESS = "Your skin has been updated, relog to see changes";
-	public String PLAYER_SKIN_CHANGE_FAILED = "Skin fetch failed: ";
+	public String PLAYER_SKIN_CHANGE_SKIN_DATA_CLEARED = "Ваш скин был аннулирован.";
+	public String PLAYER_SKIN_CHANGE_COOLDOWN = "Вы можете менять скин не более одного раза в 30 секунд.";
+	public String PLAYER_SKIN_CHANGE_SUCCESS = "Ваш скин успешно изменён. Перезайдите на сервер, чтобы изменения вступили в силу.";
+	public String PLAYER_SKIN_CHANGE_FAILED = "Произошла ошибка при получении данных: ";
+	public String INVALID_COMMAND_ARGUMENTS = "§eИспользуйте - /skin <ник>";
 
-	public String SKIN_FETCH_FAILED_NO_PREMIUM_PLAYER = "Can't find a valid premium player with that name";
-	public String SKIN_FETCH_FAILED_NO_SKIN_DATA = "No skin data found for player with that name";
-	public String SKIN_FETCH_FAILED_PARSE_FAILED = "Can't decode skin data";
-	public String SKIN_FETCH_FAILED_RATE_LIMITED = "Rate limited";
-	public String SKIN_FETCH_FAILED_ERROR = "An error has occured";
+	public String SKIN_FETCH_FAILED_NO_PREMIUM_PLAYER = "Данный ник не имеет скина.";
+	public String SKIN_FETCH_FAILED_NO_SKIN_DATA = "Не удалось получить данные скина.";
+	public String SKIN_FETCH_FAILED_PARSE_FAILED = "Не удалось преобразовать данные скина.";
+	public String SKIN_FETCH_FAILED_RATE_LIMITED = "Превышен лимит";
+	public String SKIN_FETCH_FAILED_ERROR = "Произошла ошибка";
 
 }
