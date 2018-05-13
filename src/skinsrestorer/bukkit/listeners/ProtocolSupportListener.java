@@ -3,8 +3,8 @@ package skinsrestorer.bukkit.listeners;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import protocolsupport.api.events.PlayerPropertiesResolveEvent;
-import protocolsupport.api.events.PlayerPropertiesResolveEvent.ProfileProperty;
+import protocolsupport.api.events.PlayerProfileCompleteEvent;
+import protocolsupport.api.utils.ProfileProperty;
 import skinsrestorer.bukkit.SkinsRestorer;
 import skinsrestorer.shared.format.SkinProfile;
 import skinsrestorer.shared.storage.SkinStorage;
@@ -13,8 +13,8 @@ import skinsrestorer.shared.utils.SkinFetchUtils.SkinFetchFailedException;
 public class ProtocolSupportListener implements Listener {
 
 	@EventHandler
-	public void onSkinResolve(PlayerPropertiesResolveEvent event) {
-		String name = event.getName();
+	public void onSkinResolve(PlayerProfileCompleteEvent event) {
+		String name = event.getConnection().getProfile().getOriginalName();
 		SkinProfile skinprofile = SkinStorage.getInstance().getOrCreateSkinData(name);
 		try {
 			skinprofile.attemptUpdate();
@@ -23,10 +23,11 @@ public class ProtocolSupportListener implements Listener {
 		}
 		skinprofile.applySkin(property -> {
 			String propertyname = property.getName();
-			if (!event.hasProperty(propertyname) || skinprofile.isForced()) {
+			if (event.getProperties(propertyname).isEmpty() || skinprofile.isForced()) {
+				event.removeProperties(propertyname);
 				event.addProperty(new ProfileProperty(propertyname, property.getValue(), property.getSignature()));
 			}
-		}); 
+		});
 	}
 
 }
