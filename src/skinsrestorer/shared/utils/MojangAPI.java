@@ -99,8 +99,8 @@ public class MojangAPI {
 
 	private static URLConnection setupConnection(URL url) throws IOException {
 		URLConnection connection = url.openConnection();
-		connection.setConnectTimeout(10000);
-		connection.setReadTimeout(10000);
+		connection.setConnectTimeout(2000);
+		connection.setReadTimeout(2000);
 		connection.setUseCaches(false);
 		connection.setDoInput(true);
 		connection.setDoOutput(true);
