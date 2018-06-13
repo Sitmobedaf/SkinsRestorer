@@ -58,7 +58,7 @@ public class SkinProfile implements Cloneable {
 		if (isForced) {
 			timestamp = System.currentTimeMillis();
 		}
-		if (isForced || (System.currentTimeMillis() - timestamp) <= (2 * 60 * 60 * 1000)) {
+		if (isForced || (System.currentTimeMillis() - timestamp) <= (24 * 60 * 60 * 1000)) {
 			return;
 		}
 		try {
